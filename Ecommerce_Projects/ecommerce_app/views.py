@@ -4,11 +4,14 @@ from .serializers import *
 from rest_framework import generics
 from rest_framework.views import APIView
 from rest_framework.response import Response
-
+from django_filters.rest_framework import DjangoFilterBackend
+from .filters import *
 # Create your views here.
 class ProductView(generics.ListCreateAPIView):
     queryset=Product.objects.all()
     serializer_class=ProductSerializers
+    filter_backends=[DjangoFilterBackend]
+    filterset_class=ProductFilter
 
 
 class ProductDetailView(generics.RetrieveUpdateDestroyAPIView):
