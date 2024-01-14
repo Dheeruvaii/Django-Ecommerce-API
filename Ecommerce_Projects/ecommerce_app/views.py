@@ -9,9 +9,11 @@ from rest_framework.response import Response
 class ProductView(generics.ListCreateAPIView):
     queryset=Product.objects.all()
     serializer_class=ProductSerializers
+    # def list(self,request):
+    #     return super().self.objects.all()
 
-    def create(self, request, *args, **kwargs):
-        serializers=ProductSerializers(many=True,data=request.data)
-        serializers.is_valid()
-        serializers.save
-        return Response(serializers.data)
+    # def create(self, request, *args, **kwargs):
+    #     serializers=ProductSerializers(many=True,data=request.data)
+    #     serializers.is_valid()
+    #     serializers.save
+    #     return Response(serializers.data)
