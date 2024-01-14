@@ -9,6 +9,11 @@ from rest_framework.response import Response
 class ProductView(generics.ListCreateAPIView):
     queryset=Product.objects.all()
     serializer_class=ProductSerializers
+
+
+class ProductDetailView(generics.RetrieveUpdateDestroyAPIView):
+    queryset=Product.objects.all()
+    serializer_class=ProductSerializers
     # def list(self,request):
     #     return super().self.objects.all()
 
@@ -23,6 +28,17 @@ class CategoryView(generics.ListCreateAPIView):
     serializer_class=CategorySerializers
 
 
+class CategoryDetailView(generics.RetrieveUpdateDestroyAPIView):
+    queryset=Category.objects.all()
+    serializer_class=CategorySerializers
+
+
 class ProductCategoryView(generics.ListCreateAPIView):
+    queryset=ProductCategory.objects.all()
+    serializer_class=ProductCategorySerializers
+
+
+
+class ProductCategoryDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset=ProductCategory.objects.all()
     serializer_class=ProductCategorySerializers
