@@ -17,3 +17,12 @@ class ProductView(generics.ListCreateAPIView):
     #     serializers.is_valid()
     #     serializers.save
     #     return Response(serializers.data)
+
+class CategoryView(generics.ListCreateAPIView):
+    queryset=Category.objects.all()
+    serializer_class=CategorySerializers
+
+
+class ProductCategoryView(generics.ListCreateAPIView):
+    queryset=ProductCategory.objects.all()
+    serializer_class=ProductCategorySerializers
