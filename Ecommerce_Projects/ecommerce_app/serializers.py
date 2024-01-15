@@ -35,3 +35,17 @@ class ProductCategorySerializers(serializers.ModelSerializer):
         }
         representation['category'] =category_data
         return representation
+    
+class CartItemSerializer(serializers.ModelSerializer):
+    product = ProductSerializers()
+
+    class Meta:
+        model = CartItem
+        fields = ['product', 'quantity']
+
+class CartSerializer(serializers.ModelSerializer):
+    items = CartItemSerializer(many=True)
+
+    class Meta:
+        model = Cart
+        fields = ['items']

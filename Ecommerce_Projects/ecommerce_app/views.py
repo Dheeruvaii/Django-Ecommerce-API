@@ -51,3 +51,27 @@ class ProductCategoryView(generics.ListCreateAPIView):
 class ProductCategoryDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset=ProductCategory.objects.all()
     serializer_class=ProductCategorySerializers
+
+
+class AddToCartAPIView(APIView):
+    def post(self, request, product_id):
+        product = Product.objects.get(pk=product_id)
+        cart, created = Cart.objects.get_or_create(user=request.user)
+        cart_item, created = CartItem.objects.get_or_create(cart=cart, product=product)
+        cart_item.quantity += 1
+        cart_item.save()
+        serializer = CartSerializer(cart)
+        return Response(serializer.data)
+
+class RemoveFromCartAPIView(APIView):
+    def post(self, request, product_id):
+        product = Product.objects.get(pk=product_id)
+        cart = Cart.objects.get(user=request.user)
+        cart_item = CartItem.objects.get(cart=cart, product=product)
+        if cart_item.quantity > 1:
+            cart_item.quantity -= 1
+            cart_item.save()
+        else:
+            cart_item.delete()
+        serializer = CartSerializer(cart)
+        return Response(serializer.data)
