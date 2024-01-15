@@ -18,4 +18,15 @@ class CategorySerializers(serializers.ModelSerializer):
 class ProductCategorySerializers(serializers.ModelSerializer):
     class Meta:
         model=ProductCategory
-        fields='__all__'
+        fields=['product','category']
+
+
+    def to_representation(self, instance):
+        representation = super().to_representation(instance)
+        representation['product'] = instance.product.name if instance.product else None
+        category_data = {
+            "id": instance.id,
+            "item": instance.category.item  # Assuming your category field is named 'category'
+        }
+        representation['category'] =category_data
+        return representation

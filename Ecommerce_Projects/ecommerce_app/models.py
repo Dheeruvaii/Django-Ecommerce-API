@@ -23,3 +23,4 @@ class Category(models.Model):
 class ProductCategory(models.Model):
     product=models.ForeignKey(Product,on_delete=models.CASCADE)
     category=models.ForeignKey(Category,on_delete=models.CASCADE)
+
