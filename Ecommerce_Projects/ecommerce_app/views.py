@@ -17,7 +17,13 @@ class ProductView(generics.ListCreateAPIView):
 class ProductDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset=Product.objects.all()
     serializer_class=ProductSerializers
-    # def list(self,request):
+
+    def retrieve(self, request,pk, *args, **kwargs):
+        data=Product.objects.get(pk=pk)
+        update_price=data.price*data.quantity
+        data.price=update_price
+        serializer=ProductSerializers(data)
+        return Response(serializer.data)    # def list(self,request):
     #     return super().self.objects.all()
 
     # def create(self, request, *args, **kwargs):

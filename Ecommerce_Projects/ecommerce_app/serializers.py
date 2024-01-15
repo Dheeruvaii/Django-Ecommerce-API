@@ -6,8 +6,13 @@ from .models import *
 class ProductSerializers(serializers.ModelSerializer):
     class Meta:
         model=Product
-        fields='__all__'
+        fields=['name','price','descriptions','quantity']
 
+    # def to_representation(self, instance):
+    #     representation=super().to_representation(instance)
+    #     update_price=instance.price*instance.quantity
+    #     representation['price']=update_price
+    #     return representation
 
 class CategorySerializers(serializers.ModelSerializer):
     class Meta:
