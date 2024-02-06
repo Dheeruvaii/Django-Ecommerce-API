@@ -28,12 +28,17 @@ class ProductCategory(models.Model):
     product=models.ForeignKey(Product,on_delete=models.CASCADE)
     category=models.ForeignKey(Category,on_delete=models.CASCADE)
 
-# class Cart(models.Model):
-#     # user = models.OneToOneField(User, on_delete=models.CASCADE)
-#     items = models.ManyToManyField(Product, through='CartItem')
+class Cart(models.Model):
+    # user = models.OneToOneField(User, on_delete=models.CASCADE)
+    items = models.ManyToManyField('CartItem', related_name='carts')
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
 
-# class CartItem(models.Model):
-#     product = models.ForeignKey(Product, on_delete=models.CASCADE)
-#     cart = models.ForeignKey(Cart, on_delete=models.CASCADE)
-#     quantity = models.PositiveIntegerField(default=1)
+
+class CartItem(models.Model):
+    cart = models.ForeignKey(Cart, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    quantity = models.PositiveIntegerField(default=1)
+
+    

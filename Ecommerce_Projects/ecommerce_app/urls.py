@@ -19,9 +19,10 @@ urlpatterns = [
     path('category-detail/<int:pk>/',CategoryDetailView.as_view(),name='categorydetails'),
     path('product-category/',ProductCategoryView.as_view(),name='product-category'),
     path('product-category-detail/<int:pk>/',ProductCategoryView.as_view(),name='product-category-details'),
-    path('add-to-cart/<int:product_id>/', AddToCartAPIView.as_view(), name='add-to-cart'),
-    path('remove-from-cart/<int:product_id>/', RemoveFromCartAPIView.as_view(), name='remove-from-cart'),
+    path('cart/', CartListView.as_view(), name='cart-detail'),
+      path('add-to-cart/<int:product_id>/', AddToCart.as_view(), name='add_to_cart'),
+]
 
 
     
-]
+

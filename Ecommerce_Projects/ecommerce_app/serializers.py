@@ -36,16 +36,16 @@ class ProductCategorySerializers(serializers.ModelSerializer):
         representation['category'] =category_data
         return representation
     
-# class CartItemSerializer(serializers.ModelSerializer):
-#     product = ProductSerializers()
+class CartItemSerializer(serializers.ModelSerializer):
+    product_id = serializers.IntegerField()
 
-#     class Meta:
-#         model = CartItem
-#         fields = ['product', 'quantity']
+    class Meta:
+        model = CartItem
+        fields = '__all__'
 
-# class CartSerializer(serializers.ModelSerializer):
-#     items = CartItemSerializer(many=True)
+class CartSerializer(serializers.ModelSerializer):
+    items = CartItemSerializer(many=True)  # Nested serializer for items
 
-#     class Meta:
-#         model = Cart
-#         fields = ['items']
+    class Meta:
+        model = Cart
+        fields = '__all__'
