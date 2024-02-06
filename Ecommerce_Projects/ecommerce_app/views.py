@@ -77,7 +77,7 @@ class ProductCategoryDetailView(generics.RetrieveUpdateDestroyAPIView):
 #         return Response(serializer.data)
 
 
-class CartListView(generics.ListAPIView):
+class CartListView(generics.ListCreateAPIView):
     queryset = Cart.objects.all()
     serializer_class = CartSerializer
 
@@ -85,14 +85,26 @@ class CartListView(generics.ListAPIView):
         queryset = self.get_queryset()
         serializer = self.get_serializer(queryset, many=True)
         return Response(serializer.data)
+    def create(self, request, *args, **kwargs):
+        return super().create(request, *args, **kwargs)
 
-    
 
-     
-class AddToCart(APIView):
-    def post(self, request):
-        serializer = CartItemSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+class AddToCart(generics.CreateAPIView):
+    serializer_class = CartItemSerializer
+
+    def create(self, request, *args, **kwargs):
+        # Check if 'product_id' is present in request.data
+        if 'product_id' in request.data:
+            # If 'product_id' is present, initialize the serializer with the expected fields
+            serializer = self.get_serializer(data=request.data)
+        else:
+            # If 'product_id' is not present, add it to the request data
+            request_data_with_product_id = request.data.copy()
+            request_data_with_product_id['product_id'] = request.data.get('product')
+            serializer = self.get_serializer(data=request_data_with_product_id)
+
+        # Continue with serializer validation and response handling as before
+        serializer.is_valid(raise_exception=True)
+        self.perform_create(serializer)
+        headers = self.get_success_headers(serializer.data)
+        return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)

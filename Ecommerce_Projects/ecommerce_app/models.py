@@ -30,7 +30,8 @@ class ProductCategory(models.Model):
 
 class Cart(models.Model):
     # user = models.OneToOneField(User, on_delete=models.CASCADE)
-    items = models.ManyToManyField('CartItem', related_name='carts')
+    # items = models.ManyToManyField('CartItem', related_name='carts')
+    items=models.CharField(max_length=20)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 

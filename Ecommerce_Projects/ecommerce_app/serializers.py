@@ -37,14 +37,15 @@ class ProductCategorySerializers(serializers.ModelSerializer):
         return representation
     
 class CartItemSerializer(serializers.ModelSerializer):
-    product_id = serializers.IntegerField()
+    # product_id = serializers.IntegerField()
+    product_id = serializers.PrimaryKeyRelatedField(queryset=Product.objects.all(), source='product')
 
     class Meta:
         model = CartItem
         fields = '__all__'
 
 class CartSerializer(serializers.ModelSerializer):
-    items = CartItemSerializer(many=True)  # Nested serializer for items
+    # items = CartItemSerializer(many=True)  # Nested serializer for items
 
     class Meta:
         model = Cart
