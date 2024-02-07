@@ -2,12 +2,18 @@ from django.shortcuts import render
 from .models import *
 from .serializers import *
 from rest_framework import generics,status
+from rest_framework.viewsets import ModelViewSet
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from django_filters.rest_framework import DjangoFilterBackend
 from .filters import *
 from django.shortcuts import get_object_or_404
 # Create your views here.
+
+class UserViewSet(ModelViewSet):
+    queryset=User.objects.all()
+    serializer_class=UserSerializer
+
 class ProductView(generics.ListCreateAPIView):
     queryset=Product.objects.all()
     serializer_class=ProductSerializers
