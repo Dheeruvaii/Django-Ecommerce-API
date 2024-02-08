@@ -93,27 +93,194 @@ class ProductViewSet(viewsets.ModelViewSet):
             'data' : serializer.data
         }) 
     
-    # def update(self, request, *args, **kwargs):
-    #     return Response({
+    def update(self, request, *args, **kwargs):
+        instance = self.get_object()
+        serializer = self.get_serializer(instance, data=request.data, partial=True)
+        serializer.is_valid(raise_exception=True)
+        self.perform_update(serializer)
+        return Response({
             
-    #         'message': 'updated instance',
-    #         'data' : super().update(request, *args, **kwargs)
-    #     }) 
+            'message': 'updated instance',
+            'data' : super().update(request, *args, **kwargs)
+        }) 
+    
+    def destroy(self, request, *args, **kwargs):
+        return super().destroy(request, *args, **kwargs)
 class CategoryViewSet(viewsets.ModelViewSet):
     queryset = Category.objects.all()
     serializer_class = CategorySerializers
+
+    def create(self, request, *args, **kwargs):
+        serializer=self.get_serializer(data=request.data)
+        serializer.is_valid()
+        serializer.save()
+
+        return Response({
+            'message' : "object created successfully",
+            'data' : serializer.data
+        })
+    
+    def list(self,request,*args):
+        data=self.filter_queryset(self.get_queryset())
+        serializer=self.get_serializer(data,many=True)
+        return Response({
+            'message':"Category-Lists",
+            'data' : serializer.data
+        })
+    
+    def retrieve(self, request, *args, **kwargs):
+        data=self.get_object()
+        serializer=self.get_serializer(data)
+        return Response({
+            'message':"retrieved object",
+            'data' : serializer.data
+        }) 
+    
+    def update(self, request, *args, **kwargs):
+        instance = self.get_object()
+        serializer = self.get_serializer(instance, data=request.data, partial=True)
+        serializer.is_valid(raise_exception=True)
+        self.perform_update(serializer)
+        return Response({
+            
+            'message': 'updated instance',
+            'data' : super().update(request, *args, **kwargs)
+        }) 
+    
+    def destroy(self, request, *args, **kwargs):
+        return super().destroy(request, *args, **kwargs)
 
 class ProductCategoryViewSet(viewsets.ModelViewSet):
     queryset = ProductCategory.objects.all()
     serializer_class = ProductCategorySerializers
 
+    def create(self, request, *args, **kwargs):
+        serializer=self.get_serializer(data=request.data)
+        serializer.is_valid()
+        serializer.save()
+
+        return Response({
+            'message' : "object created successfully",
+            'data' : serializer.data
+        })
+    
+    def list(self,request,*args):
+        data=self.filter_queryset(self.get_queryset())
+        serializer=self.get_serializer(data,many=True)
+        return Response({
+            'message':"Products-Category-Lists",
+            'data' : serializer.data
+        })
+    
+    def retrieve(self, request, *args, **kwargs):
+        data=self.get_object()
+        serializer=self.get_serializer(data)
+        return Response({
+            'message':"retrieved object",
+            'data' : serializer.data
+        }) 
+    
+    def update(self, request, *args, **kwargs):
+        instance = self.get_object()
+        serializer = self.get_serializer(instance, data=request.data, partial=True)
+        serializer.is_valid(raise_exception=True)
+        self.perform_update(serializer)
+        return Response({
+            
+            'message': 'updated instance',
+            'data' : super().update(request, *args, **kwargs)
+        }) 
+    
+    def destroy(self, request, *args, **kwargs):
+        return super().destroy(request, *args, **kwargs)
+
 class CartViewSet(viewsets.ModelViewSet):
     queryset = Cart.objects.all()
     serializer_class = CartSerializer
 
+    def create(self, request, *args, **kwargs):
+        serializer=self.get_serializer(data=request.data)
+        serializer.is_valid()
+        serializer.save()
+
+        return Response({
+            'message' : "object created successfully",
+            'data' : serializer.data
+        })
+    
+    def list(self,request,*args):
+        data=self.filter_queryset(self.get_queryset())
+        serializer=self.get_serializer(data,many=True)
+        return Response({
+            'message':"Cart-Lists",
+            'data' : serializer.data
+        })
+    
+    def retrieve(self, request, *args, **kwargs):
+        data=self.get_object()
+        serializer=self.get_serializer(data)
+        return Response({
+            'message':"retrieved object",
+            'data' : serializer.data
+        }) 
+    
+    def update(self, request, *args, **kwargs):
+        instance = self.get_object()
+        serializer = self.get_serializer(instance, data=request.data, partial=True)
+        serializer.is_valid(raise_exception=True)
+        self.perform_update(serializer)
+        return Response({
+            
+            'message': 'updated instance',
+            'data' : super().update(request, *args, **kwargs)
+        }) 
+    
+    def destroy(self, request, *args, **kwargs):
+        return super().destroy(request, *args, **kwargs)
+
 class CartItemViewSet(viewsets.ModelViewSet):
     queryset = CartItem.objects.all()
     serializer_class = CartItemSerializer
+
+    def create(self, request, *args, **kwargs):
+        serializer=self.get_serializer(data=request.data)
+        serializer.is_valid()
+        serializer.save()
+
+        return Response({
+            'message' : "object created successfully",
+            'data' : serializer.data
+        })
+    
+    def list(self,request,*args):
+        data=self.filter_queryset(self.get_queryset())
+        serializer=self.get_serializer(data,many=True)
+        return Response({
+            'message':"Cart-Item-Lists",
+            'data' : serializer.data
+        })
+    
+    def retrieve(self, request, *args, **kwargs):
+        data=self.get_object()
+        serializer=self.get_serializer(data)
+        return Response({
+            'message':"retrieved object",
+            'data' : serializer.data
+        }) 
+    
+    def update(self, request, *args, **kwargs):
+        instance = self.get_object()
+        serializer = self.get_serializer(instance, data=request.data, partial=True)
+        serializer.is_valid(raise_exception=True)
+        self.perform_update(serializer)
+        return Response({
+            
+            'message': 'updated instance',
+            'data' : super().update(request, *args, **kwargs)
+        }) 
+    
+    def destroy(self, request, *args, **kwargs):
+        return super().destroy(request, *args, **kwargs)
 
 
 # # class AddToCartAPIView(APIView):

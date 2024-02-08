@@ -11,7 +11,7 @@ class User(models.Model):
     def __str__(self):
         return self.name
 
-        
+
 class Product(models.Model):
     name=models.CharField(max_length=20)
     price=models.IntegerField()
@@ -49,7 +49,7 @@ class Cart(models.Model):
 
 
     def __str__(self):
-        return self.created_user
+        return self.items
 class CartItem(models.Model):
     cart = models.ForeignKey(Cart, on_delete=models.CASCADE)
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
