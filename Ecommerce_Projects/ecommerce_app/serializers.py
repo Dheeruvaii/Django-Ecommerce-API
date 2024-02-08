@@ -1,4 +1,5 @@
 from rest_framework import serializers
+from django.core.exceptions import ValidationError
 from .models import *
 
 class UserSerializer(serializers.ModelSerializer):
@@ -41,22 +42,24 @@ class ProductCategorySerializers(serializers.ModelSerializer):
         return representation
     
 class CartSerializer(serializers.ModelSerializer):
-    product_id = serializers.PrimaryKeyRelatedField(queryset=Product.objects.all(), source='product')
+    # product_id = serializers.PrimaryKeyRelatedField(queryset=Product.objects.all(), source='product')
     class Meta:
         model = Cart
-        fields =['product','quantity','created_by','product_id','created_at','updated_at']
+        fields =['product','quantity','created_by','created_at','updated_at']
 
     def validate(self, data):
-        product = data['product']
-        cart = data['cart']
+        """
+        Check that the quantity is not negative and does not exceed the product's available quantity.
+        """
+        product = data.get('product')
+        quantity = data.get('quantity')
 
-        # Check product quantity
-        if product.quantity < cart.quantity:
-            raise serializers.ValidationError("Product quantity is insufficient.")
+        if quantity < 0:
+            raise serializers.ValidationError("Quantity cannot be negative.")
 
-        # Check cart capacity
-        cart_items_count = Cart.objects.filter(cart=cart).count()
-        if cart_items_count >= cart.capacity:
-            raise serializers.ValidationError("Cart capacity exceeded.")
+        if product and quantity > product.quantity:
+            raise serializers.ValidationError(f"Quantity exceeds available quantity for product {product}.")
 
         return data
+
+   

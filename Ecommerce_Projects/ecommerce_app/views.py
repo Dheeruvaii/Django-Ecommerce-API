@@ -200,13 +200,15 @@ class CartViewSet(viewsets.ModelViewSet):
 
     def create(self, request, *args, **kwargs):
         serializer=self.get_serializer(data=request.data)
-        serializer.is_valid()
-        serializer.save()
+        if serializer.is_valid(raise_exception=True):
+            serializer.save()
 
-        return Response({
-            'message' : "object created successfully",
-            'data' : serializer.data
-        })
+            return Response({
+                'message' : "object created successfully",
+                'data' : serializer.data
+                    })
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
     def list(self,request,*args):
         data=self.filter_queryset(self.get_queryset())
