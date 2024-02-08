@@ -14,6 +14,8 @@ from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+from rest_framework.pagination import PageNumberPagination  
+
 
 
 # Quick-start development settings - unsuitable for production
@@ -106,8 +108,8 @@ REST_FRAMEWORK = {
         'django_filters.rest_framework.DjangoFilterBackend',
     ],
   
-#     "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.CustomPagination",
-#     "PAGE_SIZE": 5,
+    "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.CustomPagination",
+    "PAGE_SIZE": 5,
 }
 
 # Internationalization

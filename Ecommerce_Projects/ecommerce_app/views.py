@@ -10,6 +10,7 @@ from rest_framework.response import Response
 from django_filters.rest_framework import DjangoFilterBackend
 from .filters import *
 from django.shortcuts import get_object_or_404
+from .paginations import CustomPagination
 # Create your views here.
 
 
@@ -70,6 +71,8 @@ class ProductViewSet(viewsets.ModelViewSet):
     serializer_class = ProductSerializers
     filter_backends = [django_filters.rest_framework.DjangoFilterBackend]
     filterset_class = ProductFilter
+    pagination_class=CustomPagination
+
     def create(self, request, *args, **kwargs):
         serializer=self.get_serializer(data=request.data)
         serializer.is_valid()
