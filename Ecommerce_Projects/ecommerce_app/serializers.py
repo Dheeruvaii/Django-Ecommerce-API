@@ -12,6 +12,7 @@ class ProductSerializers(serializers.ModelSerializer):
         fields=['name','price','descriptions','quantity']
 
     def to_representation(self, instance):
+        """HERE PRICE AUTOMATICALLY CHANGES WITH QUANTITY PASSED"""
         representation=super().to_representation(instance)
         update_price=instance.price*instance.quantity
         representation['price']=update_price
@@ -39,13 +40,23 @@ class ProductCategorySerializers(serializers.ModelSerializer):
         representation['category'] =category_data
         return representation
     
-class CartItemSerializer(serializers.ModelSerializer):
+class CartSerializer(serializers.ModelSerializer):
     product_id = serializers.PrimaryKeyRelatedField(queryset=Product.objects.all(), source='product')
     class Meta:
-        model = CartItem
-        fields = '__all__'
-
-class CartSerializer(serializers.ModelSerializer):
-    class Meta:
         model = Cart
-        fields = '__all__'
+        fields =['product','quantity','created_by','product_id','created_at','updated_at']
+
+    def validate(self, data):
+        product = data['product']
+        cart = data['cart']
+
+        # Check product quantity
+        if product.quantity < cart.quantity:
+            raise serializers.ValidationError("Product quantity is insufficient.")
+
+        # Check cart capacity
+        cart_items_count = Cart.objects.filter(cart=cart).count()
+        if cart_items_count >= cart.capacity:
+            raise serializers.ValidationError("Cart capacity exceeded.")
+
+        return data
