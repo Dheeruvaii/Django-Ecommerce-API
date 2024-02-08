@@ -4,6 +4,7 @@ from .serializers import *
 from rest_framework import viewsets
 from rest_framework import generics,status
 from rest_framework.viewsets import ModelViewSet
+from .filters import *
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from django_filters.rest_framework import DjangoFilterBackend
@@ -15,6 +16,7 @@ from django.shortcuts import get_object_or_404
 class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
+   
 
     
     def create(self, request, *args, **kwargs):
@@ -66,7 +68,8 @@ class UserViewSet(viewsets.ModelViewSet):
 class ProductViewSet(viewsets.ModelViewSet):
     queryset = Product.objects.all()
     serializer_class = ProductSerializers
-
+    filter_backends = [django_filters.rest_framework.DjangoFilterBackend]
+    filterset_class = ProductFilter
     def create(self, request, *args, **kwargs):
         serializer=self.get_serializer(data=request.data)
         serializer.is_valid()

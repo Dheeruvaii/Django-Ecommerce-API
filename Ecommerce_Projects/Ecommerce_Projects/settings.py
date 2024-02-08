@@ -38,8 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'ecommerce_app',
-    'rest_framework',
     'django_filters',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
@@ -102,9 +102,12 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 REST_FRAMEWORK = {
-    'DEFAULT_FILTER_BACKENDS': (
+    'DEFAULT_FILTER_BACKENDS': [
         'django_filters.rest_framework.DjangoFilterBackend',
-    ),
+    ],
+  
+#     "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.CustomPagination",
+#     "PAGE_SIZE": 5,
 }
 
 # Internationalization

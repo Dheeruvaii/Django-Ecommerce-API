@@ -42,7 +42,6 @@ class ProductCategorySerializers(serializers.ModelSerializer):
         return representation
     
 class CartSerializer(serializers.ModelSerializer):
-    # product_id = serializers.PrimaryKeyRelatedField(queryset=Product.objects.all(), source='product')
     class Meta:
         model = Cart
         fields =['product','quantity','created_by','created_at','updated_at']
