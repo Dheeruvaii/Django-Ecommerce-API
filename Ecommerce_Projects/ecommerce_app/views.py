@@ -18,6 +18,7 @@ from .paginations import CustomPagination
 class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
+    pagination_class = CustomPagination
      
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
@@ -88,12 +89,12 @@ class ProductViewSet(viewsets.ModelViewSet):
         if page is not None:
 
             serializer=self.get_serializer(page,many=True)
-        return self.get_paginated_response({
-            'message':"paginated-products-Lists",
-            'data' : serializer.data
-        })
+            return self.get_paginated_response({
+                'message':"paginated-products-Lists",
+                'data' : serializer.data
+            })
 
-     return Response({
+        return Response({
             'message':"products-Lists",
             'data' : serializer.data
         })
@@ -122,6 +123,7 @@ class ProductViewSet(viewsets.ModelViewSet):
 class CategoryViewSet(viewsets.ModelViewSet):
     queryset = Category.objects.all()
     serializer_class = CategorySerializers
+    pagination_class = CustomPagination
 
     def create(self, request, *args, **kwargs):
         serializer=self.get_serializer(data=request.data)
@@ -166,6 +168,7 @@ class CategoryViewSet(viewsets.ModelViewSet):
 class ProductCategoryViewSet(viewsets.ModelViewSet):
     queryset = ProductCategory.objects.all()
     serializer_class = ProductCategorySerializers
+    pagination_class=CustomPagination
 
     def create(self, request, *args, **kwargs):
         serializer=self.get_serializer(data=request.data)
@@ -210,6 +213,7 @@ class ProductCategoryViewSet(viewsets.ModelViewSet):
 class CartViewSet(viewsets.ModelViewSet):
     queryset = Cart.objects.all()
     serializer_class = CartSerializer
+    pagination_class=CustomPagination
 
     def create(self, request, *args, **kwargs):
         serializer=self.get_serializer(data=request.data)
