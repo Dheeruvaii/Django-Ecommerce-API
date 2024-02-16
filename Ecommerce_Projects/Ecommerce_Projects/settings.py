@@ -103,14 +103,7 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
-REST_FRAMEWORK = {
-    'DEFAULT_FILTER_BACKENDS': [
-        'django_filters.rest_framework.DjangoFilterBackend',
-    ],
-  
-    "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.CustomPagination",
-    "PAGE_SIZE": 5,
-}
+
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.0/topics/i18n/
@@ -126,6 +119,14 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
+REST_FRAMEWORK = {
+    'DEFAULT_FILTER_BACKENDS': [
+        'django_filters.rest_framework.DjangoFilterBackend',
+    ],
+  
+    "DEFAULT_PAGINATION_CLASS": "ecommerce_app.pagination.CustomPagination",
+    "PAGE_SIZE": 5,
+}
 
 STATIC_URL = 'static/'
 

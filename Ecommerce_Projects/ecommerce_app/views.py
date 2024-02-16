@@ -7,7 +7,8 @@ from rest_framework.viewsets import ModelViewSet
 from .filters import *
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from django_filters.rest_framework import DjangoFilterBackend
+# from django_filters.rest_framework import DjangoFilterBackend
+import  django_filters.rest_framework as filters
 from .filters import *
 from django.shortcuts import get_object_or_404
 from .paginations import CustomPagination
@@ -17,9 +18,7 @@ from .paginations import CustomPagination
 class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
-   
-
-    
+     
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
@@ -69,7 +68,7 @@ class UserViewSet(viewsets.ModelViewSet):
 class ProductViewSet(viewsets.ModelViewSet):
     queryset = Product.objects.all()
     serializer_class = ProductSerializers
-    filter_backends = [django_filters.rest_framework.DjangoFilterBackend]
+    filter_backends = [filters.DjangoFilterBackend]
     filterset_class = ProductFilter
     pagination_class=CustomPagination
 
@@ -85,9 +84,17 @@ class ProductViewSet(viewsets.ModelViewSet):
     
     def list(self,request,*args):
         data=self.filter_queryset(self.get_queryset())
-        serializer=self.get_serializer(data,many=True)
-        return Response({
-            'message':"Products-Lists",
+        page=self.paginate_request(data)
+        if page is not None:
+
+            serializer=self.get_serializer(page,many=True)
+        return self.get_paginated_response({
+            'message':"paginated-products-Lists",
+            'data' : serializer.data
+        })
+
+     return Response({
+            'message':"products-Lists",
             'data' : serializer.data
         })
     

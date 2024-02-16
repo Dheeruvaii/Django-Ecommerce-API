@@ -4,7 +4,7 @@ from rest_framework import request
 
 
 class ProductFilter(django_filters.FilterSet):
-    name = django_filters.CharFilter(lookup_expr='icontains')
+    name = django_filters.CharFilter(lookup_expr='icontains') 
 
     class Meta:
         model = Product
@@ -12,8 +12,10 @@ class ProductFilter(django_filters.FilterSet):
 
    
 
-# class CartFilter(django_filters.FilterSet):
-#     assign = django_filters.CharFilter(lookup_expr='icontains') 
+# class TaskFilter(django_filters.FilterSet): 
+#     task_name = django_filters.CharFilter(lookup_expr='icontains')  
+#     due = django_filters.CharFilter(lookup_expr='icontains')
 #     class Meta:
-#         model=Cart
-#         fields= ['assign']
+#         model = Task
+#         fields = ['due','task_name']
+   
